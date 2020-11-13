@@ -23,3 +23,22 @@
 ## 注意事项
 
  如果对 Git 和 GitHub 不太了解，请参考 [Git 官方文档](https://git-scm.com/book/zh/v2) 或者极客时间的[《玩转 Git 三剑客》](https://time.geekbang.org/course/intro/145)视频课程。
+
+
+1、安装git、配置环境
+2、新建工作目录，打开git cmd，执行以下命令：
+    git init
+    git clone "git@github.com:tiandaochouqin820/Go-000.git"
+3、增删改文件
+4、提交
+    git add -A 提交全部
+    git status 查看
+    git commit -m "详细说明"
+    git push 提交
+5、同步git代码到本地
+    git fetch --all 将远程主机内容拉取到本地
+    git reset --hard 重置索引和目录
+    git pull 拉取代码
+
+git使用不熟练，采用简单粗暴方式更新、提交
+    
