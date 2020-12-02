@@ -1,0 +1,11 @@
+Database:
+  DBType: mysql
+  UserName: root
+  Password: root
+  Host: 127.0.0.1:3306
+  DBName: gk_go
+  TablePrefix: gk_
+  Charset: utf8
+  ParseTime: True
+  MaxIdleConns: 10
+  MaxOpenConns: 30
