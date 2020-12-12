@@ -14,7 +14,7 @@ var (
 	ADDR = ("127.0.0.1:8080")
 )
 
-func httpServer() error {
+func httpServer(ctx context.Context) error {
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(r.URL.Path))
 	}
@@ -24,11 +24,9 @@ func httpServer() error {
 		Addr:    ADDR,
 		Handler: serverMux,
 	}
-	defer func() {
-		if err := recover(); err != nil {
-			server.Close()
-			fmt.Errorf("http server recover info:%v\n", err)
-		}
+	go func() {
+		<-ctx.Done()
+		server.Shutdown(context.TODO())
 	}()
 	return server.ListenAndServe()
 }
@@ -41,8 +39,8 @@ func signalHandle(ctx context.Context) error {
 	select {
 	case <-ctx.Done():
 		return fmt.Errorf("http quit")
-	case err := <-sigCh:
-		return fmt.Errorf("syscall signal info: %v\n", err)
+	case <-sigCh:
+		return nil
 	}
 }
 
@@ -50,7 +48,7 @@ func main() {
 	eg, ctx := errgroup.WithContext(context.Background())
 
 	eg.Go(func() error {
-		return httpServer()
+		return httpServer(ctx)
 	})
 
 	eg.Go(func() error {
